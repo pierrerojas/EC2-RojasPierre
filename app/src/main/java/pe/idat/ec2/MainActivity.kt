@@ -3,27 +3,31 @@ package pe.idat.ec2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import pe.idat.ec2.ui.theme.Ec2Theme
+import androidx.compose.ui.unit.dp
+import pe.idat.ec2.ui.theme.EC2Theme
+import pe.idat.ec2.ui.components.Questionnaire
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            Ec2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            EC2Theme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    Scaffold(
+                        topBar = {
+                            MyAppTopAppBar(title = "Cuestionario")
+                        }
+                    ) { paddingValues ->
+                        Questionnaire(modifier = Modifier.padding(paddingValues).padding(16.dp))
+                    }
                 }
             }
         }
@@ -31,17 +35,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun MyAppTopAppBar(title: String) {
+    TopAppBar(
+        title = { Text(text = title) }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Ec2Theme {
-        Greeting("Android")
-    }
 }
